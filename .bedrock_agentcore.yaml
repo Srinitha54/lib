@@ -1,0 +1,122 @@
+default_agent: library_reservation_parallel
+agents:
+  library_reservation_sequential:
+    name: library_reservation_sequential
+    language: python
+    node_version: null
+    entrypoint: C:/Users/HP/Desktop/LIB/library_reservation_system/agentcore_entrypoint.py
+    deployment_type: container
+    runtime_type: null
+    platform: linux/arm64
+    container_runtime: none
+    source_path: null
+    aws:
+      execution_role: arn:aws:iam::211374268044:role/BedrockAgentCoreRole
+      execution_role_auto_create: false
+      account: '211374268044'
+      region: ap-south-1
+      ecr_repository: 211374268044.dkr.ecr.ap-south-1.amazonaws.com/bedrock-agentcore-library_reservation_sequential
+      ecr_auto_create: false
+      s3_path: null
+      s3_auto_create: false
+      network_configuration:
+        network_mode: PUBLIC
+        network_mode_config: null
+      protocol_configuration:
+        server_protocol: HTTP
+      observability:
+        enabled: true
+      lifecycle_configuration:
+        idle_runtime_session_timeout: null
+        max_lifetime: null
+    bedrock_agentcore:
+      agent_id: library_reservation_sequential-jvp1Iu8HKx
+      agent_arn: arn:aws:bedrock-agentcore:ap-south-1:211374268044:runtime/library_reservation_sequential-jvp1Iu8HKx
+      agent_session_id: null
+    codebuild:
+      project_name: bedrock-agentcore-library_reservation_sequential-builder
+      execution_role: arn:aws:iam::211374268044:role/AmazonBedrockAgentCoreSDKCodeBuild-ap-south-1-6ca2dc710b
+      source_bucket: bedrock-agentcore-codebuild-sources-211374268044-ap-south-1
+    memory:
+      mode: NO_MEMORY
+      memory_id: null
+      memory_arn: null
+      memory_name: null
+      event_expiry_days: 30
+      first_invoke_memory_check_done: false
+      was_created_by_toolkit: false
+    identity:
+      credential_providers: []
+      workload: null
+    aws_jwt:
+      enabled: false
+      audiences: []
+      signing_algorithm: ES384
+      issuer_url: null
+      duration_seconds: 300
+    authorizer_configuration: null
+    request_header_configuration: null
+    oauth_configuration: null
+    api_key_env_var_name: null
+    api_key_credential_provider_name: null
+    is_generated_by_agentcore_create: false
+  library_reservation_parallel:
+    name: library_reservation_parallel
+    language: python
+    node_version: null
+    entrypoint: C:/Users/HP/Desktop/LIB/library_reservation_system/agentcore_entrypoint.py
+    deployment_type: container
+    runtime_type: null
+    platform: linux/arm64
+    container_runtime: none
+    source_path: null
+    aws:
+      execution_role: arn:aws:iam::211374268044:role/BedrockAgentCoreRole
+      execution_role_auto_create: false
+      account: '211374268044'
+      region: ap-south-1
+      ecr_repository: 211374268044.dkr.ecr.ap-south-1.amazonaws.com/bedrock-agentcore-library_reservation_parallel
+      ecr_auto_create: false
+      s3_path: null
+      s3_auto_create: false
+      network_configuration:
+        network_mode: PUBLIC
+        network_mode_config: null
+      protocol_configuration:
+        server_protocol: HTTP
+      observability:
+        enabled: true
+      lifecycle_configuration:
+        idle_runtime_session_timeout: null
+        max_lifetime: null
+    bedrock_agentcore:
+      agent_id: library_reservation_parallel-YMHEcu9dW9
+      agent_arn: arn:aws:bedrock-agentcore:ap-south-1:211374268044:runtime/library_reservation_parallel-YMHEcu9dW9
+      agent_session_id: 57711fa2-76e4-427c-a9ea-0a2fd96240a6
+    codebuild:
+      project_name: bedrock-agentcore-library_reservation_parallel-builder
+      execution_role: arn:aws:iam::211374268044:role/AmazonBedrockAgentCoreSDKCodeBuild-ap-south-1-8580b619c3
+      source_bucket: bedrock-agentcore-codebuild-sources-211374268044-ap-south-1
+    memory:
+      mode: NO_MEMORY
+      memory_id: null
+      memory_arn: null
+      memory_name: null
+      event_expiry_days: 30
+      first_invoke_memory_check_done: false
+      was_created_by_toolkit: false
+    identity:
+      credential_providers: []
+      workload: null
+    aws_jwt:
+      enabled: false
+      audiences: []
+      signing_algorithm: ES384
+      issuer_url: null
+      duration_seconds: 300
+    authorizer_configuration: null
+    request_header_configuration: null
+    oauth_configuration: null
+    api_key_env_var_name: null
+    api_key_credential_provider_name: null
+    is_generated_by_agentcore_create: false
