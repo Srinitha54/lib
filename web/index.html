@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tachyon Library Reservation AI Portal</title>
+    <!-- Google Fonts for premium typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation & Control Panel -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-icon">📚</div>
+                <div class="logo-text">
+                    <h1>Tachyon</h1>
+                    <span class="sub-logo">Library Agent Portal</span>
+                </div>
+            </div>
+            
+            <nav class="sidebar-section">
+                <h2>Workflow Controls</h2>
+                <div class="control-group">
+                    <label class="control-label">Agent Execution Mode</label>
+                    <div class="toggle-mode-container">
+                        <label class="mode-option">
+                            <input type="radio" name="agent-mode" value="sequential" checked>
+                            <span class="mode-label-text">Sequential</span>
+                        </label>
+                        <label class="mode-option">
+                            <input type="radio" name="agent-mode" value="parallel">
+                            <span class="mode-label-text">Parallel</span>
+                        </label>
+                    </div>
+                    <p class="control-help">Sequential executes database checks step-by-step; Parallel runs checks concurrently.</p>
+                </div>
+            </nav>
+
+            <nav class="sidebar-section">
+                <h2>Session Operations</h2>
+                <button id="btn-reset-session" class="btn btn-secondary">
+                    <span class="icon">🔄</span> Reset Chat Session
+                </button>
+                <button id="btn-seed-db" class="btn btn-danger">
+                    <span class="icon">⚡</span> Re-seed Database
+                </button>
+                <div class="seed-warning">Warning: Re-seeding will delete current reservation edits and reset all DynamoDB tables to default sample data.</div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="status-indicator active">
+                    <span class="dot"></span>
+                    <span class="status-text">Connected to Local Agent</span>
+                </div>
+                <div class="footer-version">v1.0.0 (AWS Strands + Bedrock)</div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Central Agent Chat -->
+            <section class="chat-panel">
+                <div class="panel-header">
+                    <h2>AI Assistant</h2>
+                    <span class="badge badge-mode" id="active-mode-badge">Sequential Mode</span>
+                </div>
+                
+                <div class="chat-messages-container" id="chat-messages">
+                    <div class="message system-message">
+                        <div class="message-content">
+                            Hello! I am your Library Reservation Assistant. How can I help you today?
+                            <div class="sample-prompts">
+                                <span class="prompt-chip" data-prompt="I want to reserve book BOOK-2001. My member ID is MEM-1001.">Reserve BOOK-2001 for MEM-1001</span>
+                                <span class="prompt-chip" data-prompt="Check available books.">List Available Books</span>
+                                <span class="prompt-chip" data-prompt="I want to cancel my reservation for book BOOK-2006. Member is MEM-1001.">Cancel BOOK-2006 for MEM-1001</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chat-input-area">
+                    <div class="typing-indicator" id="typing-indicator">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        Agent is thinking...
+                    </div>
+                    <form id="chat-form" class="chat-form">
+                        <input type="text" id="chat-input" placeholder="Type your reservation request (e.g., 'Reserve BOOK-2001 for MEM-1001')..." autocomplete="off">
+                        <button type="submit" class="btn btn-primary" id="btn-send">Send</button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Database Monitor Panel -->
+            <section class="db-monitor-panel">
+                <div class="panel-header">
+                    <h2>Live Database Monitor</h2>
+                    <button class="btn-refresh" id="btn-refresh" title="Refresh Live Database View">
+                        <span class="icon">🔄</span>
+                    </button>
+                </div>
+
+                <!-- Tabs Navigation -->
+                <div class="tabs-header">
+                    <button class="tab-btn active" data-tab="tab-books">Books Catalog</button>
+                    <button class="tab-btn" data-tab="tab-members">Members</button>
+                    <button class="tab-btn" data-tab="tab-reservations">Reservations</button>
+                </div>
+
+                <!-- Tab Panels -->
+                <div class="tab-content-container">
+                    <!-- Books Tab -->
+                    <div class="tab-panel active" id="tab-books">
+                        <div class="table-scroll">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Book ID</th>
+                                        <th>Title</th>
+                                        <th>Author</th>
+                                        <th>Genre</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="books-table-body">
+                                    <tr>
+                                        <td colspan="5" class="loading-cell">Loading book catalog...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Members Tab -->
+                    <div class="tab-panel" id="tab-members">
+                        <div class="table-scroll">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Member ID</th>
+                                        <th>Name</th>
+                                        <th>Tier</th>
+                                        <th>Expiry Date</th>
+                                        <th>Active Count</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="members-table-body">
+                                    <tr>
+                                        <td colspan="5" class="loading-cell">Loading members list...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Reservations Tab -->
+                    <div class="tab-panel" id="tab-reservations">
+                        <div class="table-scroll">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Reservation ID</th>
+                                        <th>Member ID</th>
+                                        <th>Book ID</th>
+                                        <th>Reservation Date</th>
+                                        <th>Due Date</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="reservations-table-body">
+                                    <tr>
+                                        <td colspan="6" class="loading-cell">Loading active reservations...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast"></div>
+
+    <script src="index.js"></script>
+</body>
+</html>

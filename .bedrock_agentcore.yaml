@@ -92,7 +92,7 @@ agents:
     bedrock_agentcore:
       agent_id: library_reservation_parallel-YMHEcu9dW9
       agent_arn: arn:aws:bedrock-agentcore:ap-south-1:211374268044:runtime/library_reservation_parallel-YMHEcu9dW9
-      agent_session_id: 57711fa2-76e4-427c-a9ea-0a2fd96240a6
+      agent_session_id: 9b95f44f-2de2-41f0-9aa4-97c21c18e921
     codebuild:
       project_name: bedrock-agentcore-library_reservation_parallel-builder
       execution_role: arn:aws:iam::211374268044:role/AmazonBedrockAgentCoreSDKCodeBuild-ap-south-1-8580b619c3
