@@ -1,1 +1,0 @@
-{"result": "Here is the reservation summary:\n\n- Member Name: Bob Smith\n- Member ID: MEM-1002\n- Book Title: The Hobbit\n- Book Author: J.R.R. Tolkien\n- Reservation Date: 2026-07-03\n- Due Date: 2026-08-02\n- Current Active Reservations Count: 1\n\nWould you like to confirm this reservation? (YES / NO)", "workflow_mode": "sequential"}

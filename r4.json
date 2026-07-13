@@ -1,1 +1,0 @@
-{"result": "**Unfortunately, the reservation could not be cancelled because it is no longer in a cancellable state. This could mean that the book has already been returned, or the reservation was never made. Please check the status of the book or your current reservations and try again.**", "workflow_mode": "parallel"}
